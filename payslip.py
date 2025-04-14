@@ -5,7 +5,7 @@ from reportlab.pdfgen import canvas
 import os
 import getpass
 
-# 📄 1. Define the function to generate a payslip
+
 def generate_payslip_pdf(row):
     name = row['Name']
     safe_name = name.replace(" ", "_")
@@ -34,23 +34,23 @@ def generate_payslip_pdf(row):
     c.save()
     return os.path.abspath(filename)
 
-# 📥 2. Load the Excel data
+
 df = pd.read_excel("employees.xlsx")
 
-# 🔐 3. Set up Gmail login
+
 sender_email = input("Enter your Gmail address: ")
 app_password = getpass.getpass("Enter your Gmail app password: ")
 yag = yagmail.SMTP(user=sender_email, password=app_password)
 
-# 🔁 4. Loop through each employee and process
+
 for index, row in df.iterrows():
     name = row['Name']
     email = row['Email']
 
-    # 🧾 Generate the PDF
+
     pdf_path = generate_payslip_pdf(row)
 
-    # ✉️ Send the email with PDF attached
+    
     subject = "Your Monthly Payslip"
     body = f"Hi {name},\n\nPlease find attached your payslip for this month.\n\nBest regards,\nHR Team"
 
